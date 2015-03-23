@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record id="bank_credit_card" model="res.partner.bank.type">
+            <field name="name">Credit card Account</field>
+            <field name="code">credit_card</field>
+            <field name="format_layout">%(bank_name)s: CC %(acc_number)s - EXP %(expiration_date)s</field>
+        </record>
+    </data>
+
+</openerp>
