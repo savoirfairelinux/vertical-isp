@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<openerp>
+  <data>
+    <record id="wizard_contract_confirm_action" model="ir.ui.view">
+      <field name="name">Confirm Action</field>
+      <field name="model">contract.isp.confirm_action</field>
+      <field name="arch" type="xml">
+        <form string="Confirm" version="7.0">
+          <field invisible="1" name="account_id" />
+          <field invisible="1" name="method" />
+          <p attrs="{'invisible': [('method', '!=', 'set_pending')]}">
+            Confirm the suspension of this contract?
+          </p>
+          <p attrs="{'invisible': [('method', '!=', 'set_cancel')]}">
+            Confirm the cancellation of this contract?
+          </p>
+          <p attrs="{'invisible': [('method', 'in', ('set_pending', 'set_cancel'))]}">
+            Are you sure?
+          </p>
+
+          <footer>
+            <button name="do_confirm" string="Confirm" type="object" class="oe_highlight" />
+            or
+            <button string="Cancel" class="oe_link" special="cancel" />
+          </footer>
+        </form>
+      </field>
+    </record>
+  </data>
+</openerp>
+

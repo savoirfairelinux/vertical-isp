@@ -1,0 +1,305 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+# 	* contract_agent_interface
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 7.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-12-05 15:55+0000\n"
+"PO-Revision-Date: 2014-12-04 17:14-0500\n"
+"Last-Translator: Vincent Vinet <vincent.vinet@savoirfairelinux.com>\n"
+"Language-Team: \n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.4\n"
+
+#. module: contract_agent_interface
+#: field:res.partner,analytic_data_lines:0
+#: field:res.partner,analytic_tel_lines:0
+msgid "Account Lines"
+msgstr "Lignes facturées"
+
+#. module: contract_agent_interface
+#: field:contract.isp.confirm_action,method:0
+msgid "Action"
+msgstr "Action"
+
+#. module: contract_agent_interface
+#: view:res.partner:0
+msgid "Active"
+msgstr "Actif"
+
+#. module: contract_agent_interface
+#: code:_description:0
+#: model:ir.model,name:contract_agent_interface.model_account_analytic_account
+#, python-format
+msgid "Analytic Account"
+msgstr "Compte Analytique"
+
+#. module: contract_agent_interface
+#: field:res.partner,account_analytic_account_ids:0
+msgid "Analytic Accounts/Contracts"
+msgstr "Compte Analytique/Contrat"
+
+#. module: contract_agent_interface
+#: view:contract.isp.confirm_action:0
+msgid "Are you sure?"
+msgstr "Etes-vous sûr?"
+
+#. module: contract_agent_interface
+#: code:_description:0
+#: model:ir.model,name:contract_agent_interface.model_res_partner_bank
+#, python-format
+msgid "Bank Accounts"
+msgstr "Comptes bancaires"
+
+#. module: contract_agent_interface
+#: view:res.partner:0
+msgid "Bank Details"
+msgstr "Information bancaires"
+
+#. module: contract_agent_interface
+#: view:res.partner:0 field:res.partner,all_bank_ids:0
+msgid "Banks"
+msgstr "Comptes bancaires"
+
+#. module: contract_agent_interface
+#: view:contract.isp.confirm_action:0
+#: model:ir.actions.server,name:contract_agent_interface.action_set_cancel
+msgid "Cancel"
+msgstr "Annuler"
+
+#. module: contract_agent_interface
+#: view:contract.isp.confirm_action:0
+msgid "Confirm"
+msgstr "Confirmer"
+
+#. module: contract_agent_interface
+#: view:contract.isp.confirm_action:0
+msgid "Confirm the cancellation of this contract?"
+msgstr "Etes-vous sûr de vouloir annuler ce contrat ?"
+
+#. module: contract_agent_interface
+#: view:contract.isp.confirm_action:0
+msgid "Confirm the suspension of this contract?"
+msgstr "Etes-vous sûr de vouloir suspendre ce contrat ?"
+
+#. module: contract_agent_interface
+#: field:contract.isp.confirm_action,account_id:0
+msgid "Contract"
+msgstr "Contrats"
+
+#. module: contract_agent_interface
+#: view:res.partner:0
+msgid "Contracts"
+msgstr "Contrats"
+
+#. module: contract_agent_interface
+#: view:account.analytic.account:0
+msgid "Contracts without invoices"
+msgstr "Contrats sans facture"
+
+#. module: contract_agent_interface
+#: field:product.product,standard_price:0
+msgid "Cost"
+msgstr "Coût"
+
+#. module: contract_agent_interface
+#: help:product.product,standard_price:0
+msgid ""
+"Cost price of the product used for standard stock valuation in accounting "
+"and used as a base price on purchase orders."
+msgstr ""
+"Prix de vente du produit utilisé pour l'évalution de la valeur comptable du "
+"stock et utilisé comme prix de référence pour les bons de commande d'achat."
+
+#. module: contract_agent_interface
+#: view:res.partner:0
+msgid "Data Usage"
+msgstr "Consommations Internet"
+
+#. module: contract_agent_interface
+#: view:res.partner:0
+msgid "Internal Notes"
+msgstr "Note Interne"
+
+#. module: contract_agent_interface
+#: code:addons/contract_agent_interface/wizard/confirm.py:42
+#, python-format
+msgid "Invalid method name"
+msgstr "Nom de méthode invalide"
+
+#. module: contract_agent_interface
+#: view:res.partner:0
+msgid "Invoices"
+msgstr "Factures"
+
+#. module: contract_agent_interface
+#: code:addons/contract_agent_interface/wizard/confirm.py:50
+#, python-format
+msgid "Make sure to pass a valid account.analytic.account public method name"
+msgstr ""
+"Assurez vous de passer un nom de méthode publique du modèle account.analytic."
+"account"
+
+#. module: contract_agent_interface
+#: model:ir.actions.act_window,name:contract_agent_interface.action_view_create_contract
+#: view:res.partner:0
+msgid "New Contract"
+msgstr "Nouveau Contrat"
+
+#. module: contract_agent_interface
+#: code:addons/contract_agent_interface/wizard/confirm.py:49
+#, python-format
+msgid "No such method %s"
+msgstr "Méthode inexistante %s"
+
+#. module: contract_agent_interface
+#: code:addons/contract_agent_interface/contract.py:70
+#, python-format
+msgid "Not allowed"
+msgstr "Opération non permise"
+
+#. module: contract_agent_interface
+#: view:res.partner:0
+msgid "Open"
+msgstr "Ouvrir"
+
+#. module: contract_agent_interface
+#: view:account.analytic.account:0
+msgid "Orphan Contracts"
+msgstr "Contrats Orphelins"
+
+#. module: contract_agent_interface
+#: code:_description:0
+#: model:ir.model,name:contract_agent_interface.model_res_partner
+#, python-format
+msgid "Partner"
+msgstr "Partenaire"
+
+#. module: contract_agent_interface
+#: view:res.partner:0 field:res.partner,payments_ids:0
+msgid "Payments"
+msgstr "Paiements"
+
+#. module: contract_agent_interface
+#: code:_description:0
+#: model:ir.model,name:contract_agent_interface.model_product_product
+#, python-format
+msgid "Product"
+msgstr "Produit"
+
+#. module: contract_agent_interface
+#: view:res.partner:0
+msgid "Put an internal note..."
+msgstr "Laisser une note interne..."
+
+#. module: contract_agent_interface
+#: view:res.partner:0 field:res.partner,refund_ids:0
+msgid "Refunds"
+msgstr "Notes de crédit"
+
+#. module: contract_agent_interface
+#: view:account.analytic.account:0
+msgid "Renewal"
+msgstr "renouvelement"
+
+#. module: contract_agent_interface
+#: view:res.partner:0
+msgid "Residual Amount"
+msgstr "Montant Restant"
+
+#. module: contract_agent_interface
+#: field:account.analytic.account,prodlot_id:0
+msgid "Serial Number"
+msgstr "Numéro de série"
+
+#. module: contract_agent_interface
+#: view:res.partner:0
+msgid "Total Amount"
+msgstr "Montant Total"
+
+#. module: contract_agent_interface
+#: view:account.analytic.account:0
+msgid "True"
+msgstr "True"
+
+#. module: contract_agent_interface
+#: view:res.partner:0
+msgid "Untaxed Amount"
+msgstr "Montant Hors-Taxes"
+
+#. module: contract_agent_interface
+#: view:res.partner:0
+msgid "Voice Usage"
+msgstr "Consommations Téléphoniques"
+
+#. module: contract_agent_interface
+#: code:addons/contract_agent_interface/wizard/confirm.py:43
+#, python-format
+msgid "You are not allowed to use private methods"
+msgstr "Il est défendu d'utiliser des méthodes privées"
+
+#. module: contract_agent_interface
+#: code:addons/contract_agent_interface/contract.py:71
+#, python-format
+msgid "You cannot cancel a contract that has been invoiced"
+msgstr "Vous ne pouvez pas annuler un contrat qui a été facturé"
+
+#. module: contract_agent_interface
+#: view:account.analytic.account:0 view:res.partner:0
+msgid "base.group_sale_manager"
+msgstr "base.group_sale_manager"
+
+#. module: contract_agent_interface
+#: code:_description:0
+#: model:ir.model,name:contract_agent_interface.model_contract_isp_confirm_action
+#, python-format
+msgid "contract.isp.confirm_action"
+msgstr "contract.isp.confirm_action"
+
+#. module: contract_agent_interface
+#: view:account.analytic.account:0
+#, fuzzy
+msgid "contract_isp.group_isp_agent"
+msgstr "contract_isp.group_isp_agent2"
+
+#. module: contract_agent_interface
+#: view:account.analytic.account:0
+msgid "contract_isp.group_isp_agent2"
+msgstr "contract_isp.group_isp_agent2"
+
+#. module: contract_agent_interface
+#: view:account.analytic.account:0
+msgid "on_change_partner_id(partner_id, name, code)"
+msgstr "on_change_partner_id(partner_id, name, code)"
+
+#. module: contract_agent_interface
+#: view:contract.isp.confirm_action:0
+msgid "or"
+msgstr "ou"
+
+#. module: contract_agent_interface
+#: field:account.analytic.account,ui_reserve:0
+#: field:account.analytic.account,ui_return:0
+#: field:res.partner.bank,is_active:0
+msgid "unknown"
+msgstr "inconnu"
+
+#. module: contract_agent_interface
+#: view:account.invoice:0
+msgid "{'invisible': [('sent', '=', False)]}"
+msgstr "{'invisible': [('sent', '=', False)]}"
+
+#. module: contract_agent_interface
+#: view:account.invoice:0
+msgid "{'invisible': [('sent', '=', True)]}"
+msgstr ""
+
+#. module: contract_agent_interface
+#: view:account.analytic.account:0
+msgid "{'readonly': [('type', '=', 'contract')]}"
+msgstr "{'readonly': [('type', '=', 'contract')]}"
