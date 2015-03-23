@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <report auto="False"
+                id="invoice_print_report_balance_payment.invoice_print_report_payment_balance"
+                model="account.invoice"
+                name="account.invoice.balance_payment.isp"
+                rml="partner_isp/report/invoice_print_report_balance_payment.rml"
+                usage="default"
+                string="Invoices (with balance payments)" />
+    </data>
+</openerp>

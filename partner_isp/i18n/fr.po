@@ -1,0 +1,241 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#   * partner_isp
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 7.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-02-16 23:05+0000\n"
+"PO-Revision-Date: 2015-02-16 18:08-0500\n"
+"Last-Translator: Vincent Vinet <vincent.vinet@savoirfairelinux.com>\n"
+"Language-Team: \n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.4\n"
+
+#. module: partner_isp
+#: code:_description:0 model:ir.model,name:partner_isp.model_account_voucher
+#, python-format
+msgid "Accounting Voucher"
+msgstr "Paiement"
+
+#. module: partner_isp
+#: view:res.partner:0
+msgid "Birth date"
+msgstr "Date de naissance"
+
+#. module: partner_isp
+#: view:account.invoice:0 view:account.voucher:0
+msgid "Client Code"
+msgstr "Code client"
+
+#. module: partner_isp
+#: field:res.partner,code:0
+msgid "Code"
+msgstr "Code"
+
+#. module: partner_isp
+#: code:_description:0 model:ir.model,name:partner_isp.model_account_invoice
+#, python-format
+msgid "Invoice"
+msgstr "Facture"
+
+#. module: partner_isp
+#: field:res.partner,parent_is_reseller:0
+msgid "Parent is reseller"
+msgstr "La société parente est un revendeur"
+
+#. module: partner_isp
+#: code:_description:0 model:ir.model,name:partner_isp.model_res_partner
+#, python-format
+msgid "Partner"
+msgstr "Partenaire"
+
+#. module: partner_isp
+#: field:account.invoice,partner_code:0 field:account.voucher,partner_code:0
+msgid "Partner Code"
+msgstr "Code du partenaire"
+
+#. module: partner_isp
+#: field:res.partner,representative:0
+msgid "Representative"
+msgstr "Mandataire"
+
+#. module: partner_isp
+#: field:res.partner,representative_birthdate:0
+msgid "Representative birth date"
+msgstr "Date d'anniversaire du mandataire"
+
+#. module: partner_isp
+#: view:res.partner:0
+msgid "Representative name"
+msgstr "Nom du mandataire"
+
+#. module: partner_isp
+#: field:res.partner,is_reseller:0
+msgid "Reseller?"
+msgstr "Est un revendeur ?"
+
+#. module: partner_isp
+#: view:res.partner:0
+msgid "Tel2"
+msgstr "Tél2"
+
+#. module: partner_isp
+#: code:addons/partner_isp/report/invoice_print_report_balance_payment.py:42
+#, python-format
+msgid "The payment of {amount} must be received before {date_due}"
+msgstr "Le paiement de {amount} doit être reçu avant le {date_due}"
+
+#. module: partner_isp
+#: code:addons/partner_isp/report/invoice_print_report_balance_payment.py:64
+#, python-format
+msgid ""
+"The payment of {amount} will be automatically charged on the credit card "
+"ending with {last_digits} between the {bill_start} and {bill_end}."
+msgstr ""
+"Le montant de {amount} sera automatiquement prélevé sur la carte de crédit "
+"se terminant par {last_digits} entre le {bill_start} et le {bill_end}."
+
+#. module: partner_isp
+#: code:addons/partner_isp/report/invoice_print_report_balance_payment.py:77
+#, python-format
+msgid ""
+"The payment of {amount} will be withdrawn from your pre-authorized bank "
+"account between the {bill_start} and {bill_end}."
+msgstr ""
+"La paiement de {amount} sera prélevé automatiquement de votre compte "
+"bancaire autorisé entre le {bill_start} et le {bill_end}."
+
+#. module: partner_isp
+#: view:res.partner:0
+msgid "YYYY-MM-DD"
+msgstr "YYYY-MM-DD"
+
+#. module: partner_isp
+#: code:addons/partner_isp/partner.py:108 constraint:res.partner:0
+#, python-format
+msgid "You must provide a full name"
+msgstr "Vous devez fournir un nom complet"
+
+#. module: partner_isp
+#: view:res.partner:0
+msgid ""
+"['|', '|', '|', ('name', 'ilike', self), ('parent_id', 'ilike', self), "
+"('ref', '=', self), ('representative', 'ilike', self) ]"
+msgstr ""
+"['|', '|', '|', ('name', 'ilike', self), ('parent_id', 'ilike', self), "
+"('ref', '=', self), ('representative', 'ilike', self) ]"
+
+#. module: partner_isp
+#: view:res.partner:0
+msgid "apt #, residence, C/O"
+msgstr "# apt, Résidence, A/S"
+
+#. module: partner_isp
+#: view:res.partner:0
+msgid "refresh_code(name, is_company, is_reseller)"
+msgstr "refresh_code(name, is_company, is_reseller)"
+
+#. module: partner_isp
+#: view:res.partner:0
+msgid ""
+"{'invisible': ['|', ('is_company', '=', True), ('customer', '=', True)]}"
+msgstr ""
+"{'invisible': ['|', ('is_company', '=', True), ('customer', '=', True)]}"
+
+#. module: partner_isp
+#: view:res.partner:0
+msgid "{'required': ['|', ('parent_id', '=', False), ('customer', '=', True)]}"
+msgstr ""
+"{'required': ['|', ('parent_id', '=', False), ('customer', '=', True)]}"
+
+#~ msgid "Account #"
+#~ msgstr "Code Client"
+
+#~ msgid "Amount"
+#~ msgstr "Montant"
+
+#~ msgid "Base"
+#~ msgstr "Montant de base"
+
+#~ msgid "Cancelled Invoice"
+#~ msgstr "Facture annulé"
+
+#~ msgid "Contract Number"
+#~ msgstr "Numéro de contrat"
+
+#~ msgid "Description"
+#~ msgstr "Description"
+
+#~ msgid "Disc.(%)"
+#~ msgstr "Rabais (%)"
+
+#~ msgid "Draft Invoice"
+#~ msgstr "Facture brouillon"
+
+#~ msgid "Fax :"
+#~ msgstr "Fax:"
+
+#~ msgid "Fiscal Position Remark :"
+#~ msgstr "Note sur la position fiscale"
+
+#~ msgid "Invoice Date"
+#~ msgstr "Date de Facture"
+
+#~ msgid "Invoices (with balance payments)"
+#~ msgstr "Factures (avec balance de paiement)"
+
+#~ msgid "Net Total:"
+#~ msgstr "Total Hors-Taxes"
+
+#~ msgid "PRO-FORMA"
+#~ msgstr "Pro-Format"
+
+#~ msgid "Payments:"
+#~ msgstr "Paiements:"
+
+#~ msgid "Previous Balance:"
+#~ msgstr "Balance Précédente:"
+
+#~ msgid "Price"
+#~ msgstr "Prix"
+
+#~ msgid "Quantity"
+#~ msgstr "Quantité"
+
+#~ msgid "Refund"
+#~ msgstr "Note de Crédit"
+
+#~ msgid "Supplier Invoice"
+#~ msgstr "Facture Fournisseur"
+
+#~ msgid "Supplier Refund"
+#~ msgstr "Note de Crédit Fournisseur"
+
+#~ msgid "TIN :"
+#~ msgstr "Numéro de Taxe:"
+
+#~ msgid "Tax"
+#~ msgstr "Taxe"
+
+#~ msgid "Taxes"
+#~ msgstr "Taxes"
+
+#~ msgid "Taxes:"
+#~ msgstr "Taxes:"
+
+#~ msgid "Tel. :"
+#~ msgstr "Tél.:"
+
+#~ msgid "To Pay:"
+#~ msgstr "À Payer:"
+
+#~ msgid "Total:"
+#~ msgstr "Total:"
+
+#~ msgid "Unit Price"
+#~ msgstr "Prix Unitaire"

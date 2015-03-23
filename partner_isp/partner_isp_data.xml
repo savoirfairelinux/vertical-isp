@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+      <record id="view_partner_isp_form" model="ir.ui.view">
+        <field name="name">res.partner.isp.form</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form" />
+        <field name="arch" type="xml">
+          <field name="name" position="before">
+            <field name="code" readonly="1" attrs="{'invisible': [('customer', '=', False)]}"/>
+          </field>
+          <field name="is_company" position="attributes">
+            <attribute name="on_change">refresh_code(name, is_company, is_reseller)</attribute>
+          </field>
+          <field name="name" position="attributes">
+            <attribute name="on_change">refresh_code(name, is_company, is_reseller)</attribute>
+          </field>
+          <field name="website" position="after">
+            <label for="representative" attrs="{'invisible': ['|', ('parent_id', '=', True), ('customer', '=', False)]}"/>
+            <div attrs="{'invisible': ['|', ('parent_id', '=', True), ('customer', '=', False)]}">
+              <field 
+                name="representative" 
+                placeholder="Representative name"
+                style="width: 63%%" />
+              <field
+                name="representative_birthdate"
+                placeholder="Birth date"
+                options="{'datepicker': {'yearRange': 'c-100:c+0'}}"
+                style="width: 33%%" />
+            </div>
+            <field 
+              name="is_reseller"
+              on_change="refresh_code(name, is_company, is_reseller)"
+              attrs="{'invisible': ['|',('is_company', '=', False), ('customer', '=', False)]}"/>
+          </field>
+          <field name="image" position="replace" />
+          <field name="title" position="attributes">
+            <attribute name="attrs">{'invisible': ['|', ('is_company', '=', True), ('customer', '=', True)]}</attribute>
+          </field>
+          <field name="title" position="before">
+            <field name="birthdate"
+              attrs="{'invisible': ['|', ('is_company', '=', True), ('customer', '=', False)]}"
+              placeholder="YYYY-MM-DD"
+              options="{'datepicker': {'yearRange': 'c-100:c+0'}}"
+              />
+          </field>
+          <field name="zip" position="attributes">
+            <attribute name="attrs">{'required': ['|', ('parent_id', '=', False), ('customer', '=', True)]}</attribute>
+          </field>
+          <field name="email" position="attributes">
+            <attribute name="attrs">{'required': ['|', ('parent_id', '=', False), ('customer', '=', True)]}</attribute>
+          </field>
+
+          <xpath expr="//field[@name='lang']" position="replace" />
+          <xpath expr="//field[@name='is_reseller']" position="after">
+            <field name="lang" />
+          </xpath>
+          <xpath expr="//field[@name='phone']" position="attributes">
+            <attribute name="attrs">{'required': ['|', ('parent_id', '=', False), ('customer', '=', True)]}</attribute>
+          </xpath>
+          <xpath expr="//field[@name='mobile']" position="attributes">
+            <attribute name="string">Tel2</attribute>
+          </xpath>
+          <xpath expr="//field[@name='street2']" position="attributes">
+            <attribute name="placeholder">apt #, residence, C/O</attribute>
+          </xpath>
+          <xpath expr="//field[@name='user_id']" position="attributes">
+            <attribute name="readonly">1</attribute>
+          </xpath>
+          <xpath expr="//field[@name='birthdate']" position="attributes">
+          </xpath>
+        </field>
+      </record>
+
+    <record id="view_res_partner_isp_filter" model="ir.ui.view">
+      <field name="name">res.partner.isp.select</field>
+      <field name="model">res.partner</field>
+      <field name="inherit_id" ref="base.view_res_partner_filter" />
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='name']" position="attributes">
+          <attribute name="filter_domain">['|', '|', '|', ('name', 'ilike', self), ('parent_id', 'ilike', self), ('ref', '=', self), ('representative', 'ilike', self) ]</attribute>
+        </xpath>
+        <field name="name" position="before">
+          <field name="code" filter_domain="[('code', 'startswith', self)]"/>
+        </field>
+        <field name="name" position="after">
+          <field name="zip" />
+        </field>
+        <xpath expr="//field[@name='category_id']" position="replace" />
+        <xpath expr="//field[@name='user_id']" position="before">
+          <field name="email" />
+          <field name="phone" filter_domain="['|', ('phone', 'ilike', self), ('mobile', 'ilike', self)]" />
+        </xpath>
+      </field>
+    </record>
+
+        <record model="ir.ui.view" id="res_partner_isp_kanban_view">
+            <field name="name">res.partner.isp.kanban</field>
+            <field name="model">res.partner</field>
+	    <field name="inherit_id" ref="base.res_partner_kanban_view" />
+            <field name="arch" type="xml">
+		<field name="has_image" position="after">
+		    <field name="code"/>
+		    <field name="customer"/>
+		</field>
+		<xpath expr="//h4[@class='oe_partner_heading']/a/field" position="replace">
+		    <field name="code" t-if="record.code.raw_value and record.customer.raw_value" /><span t-if="record.code.raw_value and record.customer.raw_value"> - </span><field name="name"/>
+		</xpath>
+	    </field>
+	</record>
+    </data>
+</openerp>
