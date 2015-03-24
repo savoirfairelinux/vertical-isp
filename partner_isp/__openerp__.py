@@ -47,7 +47,7 @@
         'account',
         'account_voucher',
         'invoice_print_report_balance_payment',
-        'web_datetime_options',
+        'web_widget_datepicker_options',
     ],
     'data': [
         'account_data.xml',
