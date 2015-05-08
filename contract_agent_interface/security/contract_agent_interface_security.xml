@@ -1,0 +1,42 @@
+<?xml version="1.0" ?>
+<openerp>
+    <data>
+	<record model="ir.ui.menu" id="base.menu_sales">
+            <field name="groups_id" eval="[(4, ref('contract_isp.group_isp_agent'))]" />
+        </record>
+
+<!--
+	<record model="ir.ui.menu" id="base.menu_partner">
+            <field name="groups_id" eval="[(4, ref('group_isp_agent'))]" />
+        </record>
+-->
+	<record model="ir.ui.menu" id="base.menu_base_partner">
+            <field name="groups_id" eval="[(4, ref('contract_isp.group_isp_agent'))]" />
+        </record>
+
+	<record model="ir.ui.menu" id="base.menu_partner_form">
+            <field name="groups_id" eval="[(4, ref('contract_isp.group_isp_agent'))]" />
+        </record>
+
+	<record model="ir.ui.menu" id="base.menu_product">
+            <field name="groups_id" eval="[(4, ref('base.group_sale_manager'))]" />
+        </record>
+
+	<record model="ir.ui.menu" id="account_analytic_analysis.menu_template_of_contract_action">
+            <field name="groups_id" eval="[(4, ref('base.group_sale_manager'))]" />
+        </record>
+
+	<record model="ir.ui.menu" id="base.menu_invoiced">
+            <field name="groups_id" eval="[(4, ref('base.group_sale_manager'))]" />
+        </record>
+
+	<record model="ir.ui.menu" id="sale.menu_sale_quotations">
+            <field name="groups_id" eval="[(4, ref('base.group_sale_manager'))]" />
+        </record>
+
+	<record model="ir.ui.menu" id="account_analytic_analysis.menu_action_account_analytic_overdue_all">
+            <field name="groups_id" eval="[(4, ref('base.group_sale_manager'))]" />
+        </record>
+
+    </data>
+</openerp>

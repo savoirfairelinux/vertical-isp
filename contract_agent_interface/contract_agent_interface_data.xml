@@ -1,0 +1,314 @@
+<?xml version="1.0" ?>
+<openerp>
+  <data>
+    <record id="action_view_create_contract" model="ir.actions.act_window">
+      <field name="name">New Contract</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="src_model">res.partner</field>
+      <field name="res_model">account.analytic.account</field>
+      <field name="view_type">form</field>
+      <field name="view_id" ref="analytic.view_account_analytic_account_form" />
+      <field name="view_mode">tree,form</field>
+      <field name="context">{'default_type': 'contract', 'default_partner_id': active_id, 'default_use_contract_services': True, 'default_use_timesheets': True, 'default_invoice_on_timesheets': True}</field>
+      <field name="target">current</field>
+    </record>
+
+    <record id="view_contract_agent_interface" model="ir.ui.view">
+      <field name="name">contract_agent_interface.partner_form</field>
+      <field name="model">res.partner</field>
+      <field name="inherit_id" ref="base.view_partner_form"/>
+      <field name="arch" type="xml">
+        <xpath expr="//page[@string='Accounting']//field[@name='credit']" position="replace" />
+        <xpath expr="//field[@name='website']" position="after">
+          <field name='credit' />
+        </xpath>
+        <xpath expr="//page[@string='Accounting']" position="attributes">
+          <attribute name="groups">base.group_sale_manager</attribute>
+        </xpath>
+        <xpath expr="//page[@string='Sales &amp; Purchases']" position="attributes">
+          <attribute name="groups">base.group_sale_manager</attribute>
+        </xpath>
+        <xpath expr="//page[@string='Internal Notes']" position="before">
+          <page string="Contracts" groups="contract_isp.group_isp_agent">
+            <field name="account_analytic_account_ids" domain="[('type', '=', 'contract')]" mode="tree" readonly="1">
+              <tree create="false" delete="false" editable="top" readonly="1" colors="red:state == 'pending'" version="7.0">
+                <field name="state" invisible="1" />
+                <field name="name" />
+                <field name="date_start" />
+                <field name="date" groups="contract_isp.group_isp_agent2"/>
+                <field name="state" />
+                <button name="open_contract" type="object" icon="gtk-open" string="Open" /> 
+              </tree>
+            </field>
+          </page>
+          <page string="Invoices" groups="contract_isp.group_isp_agent">
+            <field 
+              name="invoice_ids"
+              mode="tree"
+              readonly="1"
+              context="{'form_view_ref': 'account.invoice_form'}"
+              domain="[('type', '=', 'out_invoice')]">
+              <tree>
+                <field name="number" />
+                <field name="date_invoice" />
+                <field name="date_due" />
+                <field name="origin" />
+                <field name="residual" sum="Residual Amount"/>
+                <field name="amount_untaxed" sum="Untaxed Amount"/>
+                <field name="amount_total" sum="Total Amount"/>
+                <field name="state"/>
+              </tree>
+            </field>
+          </page>
+          <page string="Refunds" groups="contract_isp.group_isp_agent">
+            <field 
+              name="refund_ids"
+              mode="tree"
+              readonly="1"
+              context="{'form_view_ref': 'account.invoice_form'}"
+              domain="[('type', '=', 'out_refund')]">
+              <tree>
+                <field name="number" />
+                <field name="date_invoice" />
+                <field name="date_due" />
+                <field name="origin" />
+                <field name="residual" sum="Residual Amount"/>
+                <field name="amount_untaxed" sum="Untaxed Amount"/>
+                <field name="amount_total" sum="Total Amount"/>
+                <field name="state"/>
+              </tree>
+            </field>
+          </page>
+
+          <page string="Payments" groups="contract_isp.group_isp_agent">
+            <field 
+              name="payments_ids"
+              readonly="1"
+              mode="tree">
+              <tree>
+                <field name="date"/>
+                <field name="number"/>
+                <field name="reference"/>
+                <field name="amount" sum="Total Amount"/>
+                <field name="state"/>
+              </tree>
+            </field>
+          </page>
+
+          <page string="NSF" groups="contract_isp.group_isp_agent">
+            <field
+              name="nsf_lines"
+              readonly="1"
+              mode="tree">
+              <tree>
+                <field name="date" />
+                <field name="name" />
+                <field name="ref" />
+                <field name="account_id" />
+                <field name="debit" />
+                <field name="credit" />
+                <field name="move_id" />
+              </tree>
+            </field>
+          </page>
+          <page string="Banks" groups="contract_isp.group_isp_agent">
+            <field name="all_bank_ids" context="{'default_partner_id': active_id, 'form_view_ref': 'base.view_partner_bank_form'}">
+              <tree string="Bank Details" colors="gray: is_active == False">
+                <field name="state" invisible="1"/>
+                <field name="sequence" invisible="1"/>
+                <field name="acc_number"/>
+                <field name="bank_name"/>
+                <field name="owner_name"/>
+                <field name="is_active" string="Active"/>
+              </tree>
+            </field>
+
+          </page>
+
+          <page string="Data Usage" groups="contract_isp.group_isp_agent">
+            <field 
+              name="analytic_data_lines" 
+              readonly="1" />
+          </page>
+          <page string="Voice Usage" groups="contract_isp.group_isp_agent">
+            <field 
+              name="analytic_tel_lines"
+              readonly="1" />
+          </page>
+        </xpath>
+
+        <xpath expr="//div[@name='buttons']" position="inside">
+          <button
+            type="action"
+            string="New Contract"
+            name="%(action_view_create_contract)d" />
+        </xpath>
+
+        <xpath expr="//page[@string='Contacts']" position='attributes'>
+          <attribute name="autofocus">0</attribute>
+        </xpath>
+
+        <xpath expr="//page[@string='Internal Notes']" position='replace' />
+
+        <xpath expr="//page[@string='Contacts']" position='before'>
+          <page string="Internal Notes" autofocus="autofocus">
+            <p style="color: red;">
+              <field name="comment" placeholder="Put an internal note..."/>
+            </p>
+          </page>
+        </xpath>
+      </field>
+    </record>
+
+    <record id="view_partner_agent_property_form" model="ir.ui.view">
+      <field name="name">res.partner.agent.property.form.inherit</field>
+      <field name="model">res.partner</field>
+      <field name="inherit_id" ref="account.view_partner_property_form"/>
+      <field name="arch" type="xml">
+        <xpath expr="//page[@name='accounting']/field[@name='bank_ids']" position="replace" />
+      </field>
+    </record>
+
+    <record id="view_agent_contract_form_name" model="ir.ui.view">
+      <field name="name">agent.isp.form.name</field>
+      <field name="model">account.analytic.account</field>
+      <field name="inherit_id" ref="contract_isp.contract_isp_form_buttons_adjust"/>
+      <field name="arch" type="xml">
+        <field name="name" position="attributes">
+          <attribute name="attrs">{'readonly': [('type', '=', 'contract')]}</attribute>
+        </field>
+        <xpath expr="//group[@name='main']/group/field[@name='partner_id']" position="attributes">
+          <attribute name="on_change">on_change_partner_id(partner_id, name, code)</attribute>
+        </xpath>
+
+        <xpath expr="//group[@name='contract']" position="replace">
+          <group string="Renewal" name="contract" colspan="2">
+            <group>
+              <field name="date_start" default_focus="1" />
+              <field name="date" />
+              <div name="duration">
+
+              </div>
+            </group>
+
+            <group>
+            </group>
+          </group>
+        </xpath>
+
+        <xpath expr="//button[@name='set_cancel']" position="attributes">
+          <attribute name="groups">contract_isp.group_isp_agent</attribute>
+        </xpath>
+
+        <xpath expr="//field[@name='template_id']" position="attributes">
+          <attribute name="groups">contract_isp.group_isp_agent2</attribute>
+        </xpath>
+        <xpath expr="//field[@name='date']" position="attributes">
+          <attribute name="groups">contract_isp.group_isp_agent2</attribute>
+        </xpath>
+        <xpath expr="//field[@name='code']" position="attributes">
+          <attribute name="groups">contract_isp.group_isp_agent2</attribute>
+        </xpath>
+        <xpath expr="//field[@name='manager_id']" position="attributes">
+          <attribute name="readonly">1</attribute>
+        </xpath>
+      </field>
+    </record>
+
+    <record id="view_agent_contract_form_use_contract_service" model="ir.ui.view">
+      <field name="name">agent.isp.form.use.contract.services</field>
+      <field name="model">account.analytic.account</field>
+      <field name="inherit_id" ref="contract_isp.view_contract_isp_form"/>
+      <field name="arch" type="xml">
+        <field name="use_contract_services" position="attributes">
+          <attribute name="groups">base.group_sale_manager</attribute>
+        </field>
+      </field>
+    </record>
+
+    <record id="view_agent_contract_form_timesheet" model="ir.ui.view">
+      <field name="name">agent.isp.form.timesheet</field>
+      <field name="model">account.analytic.account</field>
+      <field name="inherit_id" ref="hr_timesheet.account_analytic_account_timesheet_form"/>
+      <field name="arch" type="xml">
+        <xpath expr="//div[@name='project']" position="attributes">
+          <attribute name="groups">base.group_sale_manager</attribute>
+        </xpath>
+        <xpath expr="//field[@name='use_timesheets']" position="attributes">
+          <attribute name="groups">base.group_sale_manager</attribute>
+        </xpath>
+      </field>
+    </record>
+
+	<record id="view_agent_contract_form_pricelist" model="ir.ui.view">
+            <field name="name">agent.isp.form.pricelist</field>
+            <field name="model">account.analytic.account</field>
+	    <field name="inherit_id" ref="account_analytic_analysis.account_analytic_account_form_form"/>
+            <field name="arch" type="xml">
+		<xpath expr="//label[@for='quantity_max']" position="attributes">
+		    <attribute name="invisible">True</attribute>
+		</xpath>
+		<field name="quantity_max" position="attributes">
+		    <attribute name="invisible">True</attribute>
+		</field>
+		<separator name="toinvoice" position="attributes">
+		    <attribute name="groups">base.group_sale_manager</attribute>
+		</separator>
+		<xpath expr="//table[@class='oe_form_analytic_account']" position="attributes">
+		    <attribute name="groups">base.group_sale_manager</attribute>
+		</xpath>
+		<field name="pricelist_id" position="replace">
+		    <field
+			name="pricelist_id"
+			eval="ref('product.pricelist_type_sale')"
+			groups="base.group_sale_manager" />
+		</field>
+		<field name="to_invoice" position="attributes">
+		    <attribute name="groups">base.group_sale_manager</attribute>
+		</field>
+		<xpath expr="//group[@name='invoice_on_timesheets']" position="attributes">
+		    <attribute name="groups">base.group_sale_manager</attribute>
+		</xpath>
+	    </field>
+	</record>
+
+
+    <record id="invoice_form" model="ir.ui.view">
+      <field name="inherit_id" ref="account.invoice_form" />
+      <field name="name">account.invoice.form</field>
+      <field name="model">account.invoice</field>
+      <field name="arch" type="xml">
+        <xpath expr="//button[@name='action_invoice_sent'][1]" position="attributes">
+          <attribute name="attrs">{'invisible': [('sent', '=', True)]}</attribute>
+        </xpath>
+        <xpath expr="//button[@name='action_invoice_sent'][2]" position="attributes">
+          <attribute name="attrs">{'invisible': [('sent', '=', False)]}</attribute>
+        </xpath>
+      </field>
+    </record>
+
+    <record id="contract_filter_orphan" model="ir.ui.view">
+      <field name="inherit_id" ref="account_analytic_analysis.view_account_analytic_account_overdue_search" />
+      <field name="model">account.analytic.account</field>
+      <field name="arch" type="xml">
+        <xpath expr="//filter[@string='Contracts not assigned']" position="after">
+          <filter string="Orphan Contracts" domain="[('invoice_ids', '=', False)]" help="Contracts without invoices" />
+        </xpath>
+      </field>
+    </record>
+
+    <record id="action_set_cancel" model="ir.actions.server">
+      <field name="name">Cancel</field>
+      <field name="model_id" ref="model_account_analytic_account" />
+      <field name="state">code</field>
+      <field name="code">action = obj.action_cancel_multi(context=context)</field>
+    </record>
+
+    <record id="multi_action_set_cancel" model="ir.values">
+      <field name="key2">client_action_multi</field>
+      <field name="model">account.analytic.account</field>
+      <field name="name">Cancel</field>
+      <field name="value" eval="'ir.actions.server,%d' % action_set_cancel" />
+    </record>
+  </data>
+</openerp>
