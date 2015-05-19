@@ -90,7 +90,7 @@ class res_partner(orm.Model):
             'Payments'),
         'all_bank_ids': fields.one2many(
             'res.partner.bank', 'partner_id', 'Banks',
-            domain=['|', ('active', '=', False), ('active', '=', True)],
+            domain=['|', ('is_active', '=', False), ('is_active', '=', True)],
         ),
         'nsf_lines': fields.one2many(
             'account.move.line', 'partner_id', 'NSF',
