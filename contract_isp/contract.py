@@ -589,10 +589,14 @@ class account_analytic_account(orm.Model):
         if values['type'] == 'contract' and values['use_contract_services']:
             values['name'] = values['code']
             partner_obj = self.pool.get('res.partner')
-            values['parent_id'] = partner_obj.read(
+            aa_ids = partner_obj.read(
                 cr, uid, values['partner_id'],
                 fields=['partner_analytic_account_id'],
-                context=context)['partner_analytic_account_id'][0]
+                context=context)['partner_analytic_account_id']
+            if aa_ids and len(aa_ids) > 0:
+                values['parent_id'] = aa_ids[0]
+            else:
+                values['parent_id'] = None
 
         ret = super(account_analytic_account, self).create(cr, uid, values,
                                                            context)
