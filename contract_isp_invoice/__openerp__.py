@@ -22,7 +22,7 @@
 
 {
     'name': 'Contract ISP Invoice',
-    'version': '1.0',
+    'version': '1.1',
     'category': 'Contract Management',
     'description': """
 Invoicing for service based contracts
