@@ -20,7 +20,13 @@
 #
 ##############################################################################
 
+import logging
+import sys
+
 from openerp.osv import orm, fields
+
+_logger = logging.getLogger(__name__)
+
 
 PROCESS_CRON = 'cron'
 PROCESS_INITIAL = 'initial'
@@ -39,4 +45,46 @@ class Invoice(orm.Model):
             (PROCESS_PRORATA, 'Pro Rata'),
             (PROCESS_RECURRENT, 'Recurrent Billing'),
         ], 'Billing Process', required=False),
+        'to_send': fields.boolean('To Send by Email'),
     }
+    _defaults = {
+        'to_send': False,
+    }
+
+    def write(self, cr, uid, ids, values, context=None):
+        if values.get('sent'):
+            values['to_send'] = False
+        return super(Invoice, self).write(cr, uid, ids, values,
+                                          context=context)
+
+    def send_email_contract_invoice(self, cr, uid, ids, context=None):
+        context = context or {}
+
+        if not isinstance(ids, list):
+            ids = [ids]
+
+        mail_template_obj = self.pool.get('email.template')
+        ir_model_data_obj = self.pool.get('ir.model.data')
+        mail_template_id = ir_model_data_obj.get_object_reference(
+            cr, uid, 'account',
+            'email_template_edi_invoice')[1]
+        mail_mail_obj = self.pool.get('mail.mail')
+
+        for inv in ids:
+            _logger.info("Mailing invoice %s", inv)
+
+            try:
+                mail_id = mail_template_obj.send_mail(
+                    cr, uid, mail_template_id, inv, context=context)
+                mail_message = mail_mail_obj.browse(
+                    cr, uid, mail_id,
+                    context=context).mail_message_id
+                mail_message.write({'type': 'email'})
+            except:
+                _logger.error(
+                    'Error generating mail for invoice %s: \n\n %s',
+                    self.browse(
+                        cr, uid, inv, context=context).name,
+                    sys.exc_info()[0])
+
+        return True
