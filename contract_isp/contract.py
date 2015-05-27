@@ -596,7 +596,7 @@ class account_analytic_account(orm.Model):
             if aa_ids and len(aa_ids) > 0:
                 values['parent_id'] = aa_ids[0]
             else:
-                values['parent_id'] = None
+                values['parent_id'] = False
 
         ret = super(account_analytic_account, self).create(cr, uid, values,
                                                            context)
