@@ -30,6 +30,9 @@
         </xpath>
         <xpath expr="//page[@string='Internal Notes']" position="before">
           <page string="Contracts" groups="contract_isp.group_isp_agent">
+            <group>
+              <field name="partner_analytic_account_id" />
+            </group>
             <field name="account_analytic_account_ids" domain="[('type', '=', 'contract')]" mode="tree" readonly="1">
               <tree create="false" delete="false" editable="top" readonly="1" colors="red:state == 'pending'" version="7.0">
                 <field name="state" invisible="1" />
