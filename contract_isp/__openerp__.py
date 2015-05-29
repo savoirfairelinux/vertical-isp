@@ -22,7 +22,7 @@
 
 {
     'name': 'Contract ISP',
-    'version': '1.0',
+    'version': '1.1',
     'category': 'Contract Management',
     'description': """
 Manage service based contracts
