@@ -179,7 +179,8 @@ class contract_service(orm.Model):
             'Type'),
         # XXX Should this be a function based on product.product?
         'require_activation': fields.boolean('Require activation'),
-        'account_id': fields.many2one('account.analytic.account', 'Contract'),
+        'account_id': fields.many2one('account.analytic.account', 'Contract',
+                                      select=True),
         'unit_price': fields.function(
             _get_product_price, type='float',
             digits_compute=dp.get_precision('Product Price'),

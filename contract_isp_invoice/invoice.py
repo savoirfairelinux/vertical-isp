@@ -88,3 +88,22 @@ class Invoice(orm.Model):
                     sys.exc_info()[0])
 
         return True
+
+    def _auto_init(self, cr, context=None):
+        res = super(Invoice, self)._auto_init(cr, context=context)
+
+        # Create indexes that will speed up invoicing
+        for idx, on in (("account_invoice_partner_date_index",
+                         "account_invoice (partner_id, date_invoice)"),
+                        ("res_partner_bank_company_active_index",
+                         "res_partner_bank (company_id, active)")):
+            cr.execute("""
+                       SELECT indexname FROM pg_indexes
+                       WHERE indexname = %s
+                       """,
+                       (idx, ))
+            if not cr.fetchall():
+                cr.execute("CREATE INDEX {0} ON {1}".format(idx, on))
+                cr.commit()
+
+        return res
