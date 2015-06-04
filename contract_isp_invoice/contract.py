@@ -525,9 +525,9 @@ class account_analytic_account(orm.Model):
         """
         Trigger sending of email according to company settings.
 
-        - immediate: send email now
-        - deferred: mark invoice to be sent later
-        - manual: do not send email
+        If the company is configured to send emails, but you provide
+        `defer_send_email = True` in the context, emails will be queued
+        but not sent.
         """
         res_company_obj = self.pool['res.company']
         to_send = res_company_obj.read(

@@ -38,3 +38,10 @@ class Company(orm.Model):
     _defaults = {
         'send_email_contract_invoice': True
     }
+
+    def send_pending_invoices(self, cr, uid, ids, context=None):
+        for company_id in ids:
+            self.pool["account.invoice"].send_pending_invoices(
+                cr, uid, [], company_id=company_id,
+                context=context)
+        return True

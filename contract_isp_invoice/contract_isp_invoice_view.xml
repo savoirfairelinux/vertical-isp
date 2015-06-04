@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openerp>
     <data>
+        <record id="action_send_deferred_emails" model="ir.actions.server">
+            <field name="sequence" eval="5"/>
+            <field name="state">code</field>
+            <field name="type">ir.actions.server</field>
+            <field name="model_id" ref="model_res_company"/>
+            <field name="code">self.send_pending_invoices(cr, uid, context.get("active_ids"))</field>
+            <field name="name">Send Deferred Invoices</field>
+        </record>
+
         <record id="view_company_contract_isp_invoice_form" model="ir.ui.view">
             <field name="name">contract.isp.invoice.res.company.form</field>
             <field name="model">res.company</field>
@@ -9,6 +18,11 @@
                 <field name="cutoff_day" position="after">
                     <field name="invoice_day" />
                     <field name="send_email_contract_invoice" />
+                    <button
+                      name="%(action_send_deferred_emails)s"
+                      string="Send Emails"
+                      type="action"
+                      icon="terp-mail-message-new"/>
                 </field>
             </field>
         </record>
