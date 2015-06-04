@@ -48,7 +48,9 @@ class Company(orm.Model):
 
         return company.prorata_bill_delay or 0
 
-    def send_pending_invoices(self, cr, uid, ids, context=None):
+    def send_pending_invoices(self, cr, uid, ids=None, context=None):
+        if ids is None:
+            ids = self.search(cr, uid, [], context=context)
         for company_id in ids:
             self.pool["account.invoice"].send_pending_invoices(
                 cr, uid, [], company_id=company_id,
