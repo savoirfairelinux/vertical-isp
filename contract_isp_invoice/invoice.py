@@ -89,6 +89,20 @@ class Invoice(orm.Model):
 
         return True
 
+    def send_pending_invoices(self, cr, uid, ids, company_id=None, context=None):
+        """
+        Send invoices that have been marked `to_send`
+        """
+        domain = [('to_send', '=', True)]
+        if company_id:
+            domain.append(('company_id', '=', company_id))
+        if ids:
+            domain.append(('id', 'in', ids))
+
+        to_send = self.search(cr, uid, domain, context=context)
+        self.send_email_contract_invoice(cr, uid, to_send, context=context)
+        return True
+
     def _auto_init(self, cr, context=None):
         res = super(Invoice, self)._auto_init(cr, context=context)
 
