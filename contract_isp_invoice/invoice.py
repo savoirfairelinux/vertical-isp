@@ -86,6 +86,10 @@ class Invoice(orm.Model):
                     self.browse(
                         cr, uid, inv, context=context).name,
                     sys.exc_info()[0])
+            else:
+                self.write(cr, uid, [inv],
+                           {'to_send': False},
+                           context=context)
 
         return True
 
