@@ -396,39 +396,6 @@ class account_analytic_account(orm.Model):
                                           PROCESS_PRORATA, inv=True,
                                           context=context)
 
-    def send_email_contract_invoice(self, cr, uid, ids, context=None):
-        context = context or {}
-
-        if not isinstance(ids, list):
-            ids = [ids]
-
-        account_invoice_obj = self.pool.get('account.invoice')
-        mail_template_obj = self.pool.get('email.template')
-        ir_model_data_obj = self.pool.get('ir.model.data')
-        mail_template_id = ir_model_data_obj.get_object_reference(
-            cr, uid, 'account',
-            'email_template_edi_invoice')[1]
-        mail_mail_obj = self.pool.get('mail.mail')
-
-        for inv in ids:
-            _logger.info("Mailing invoice %s", inv)
-
-            try:
-                mail_id = mail_template_obj.send_mail(
-                    cr, uid, mail_template_id, inv, context=context)
-                mail_message = mail_mail_obj.browse(
-                    cr, uid, mail_id,
-                    context=context).mail_message_id
-                mail_message.write({'type': 'email'})
-            except:
-                _logger.error(
-                    'Error generating mail for invoice %s: \n\n %s',
-                    account_invoice_obj.browse(
-                        cr, uid, inv, context=context).name,
-                    sys.exc_info()[0])
-
-        return True
-
     def _get_invoice_date(self, cr, uid, process, date=None, context=None):
         """
         Get the date for an invoice, based on the billing process and the
@@ -450,6 +417,11 @@ class account_analytic_account(orm.Model):
         if date is None:
             date = datetime.datetime.strptime(
                 fields.date.context_today(self, cr, uid, context=context),
+                DEFAULT_SERVER_DATE_FORMAT,
+            ).date()
+        elif not isinstance(date, (datetime.datetime, datetime.date)):
+            date = datetime.datetime.strptime(
+                date,
                 DEFAULT_SERVER_DATE_FORMAT,
             ).date()
         res_company_obj = self.pool['res.company']
@@ -556,6 +528,31 @@ class account_analytic_account(orm.Model):
 
         return res
 
+    def trigger_email(self, cr, uid, invoice_id, context=None):
+        """
+        Trigger sending of email according to company settings.
+
+        If the company is configured to send emails, but you provide
+        `defer_send_email = True` in the context, emails will be queued
+        but not sent.
+        """
+        res_company_obj = self.pool['res.company']
+        to_send = res_company_obj.read(
+            cr, uid,
+            res_company_obj._company_default_get(cr, uid, context),
+            ["send_email_contract_invoice"],
+            context=context)["send_email_contract_invoice"]
+        if not to_send:
+            return
+
+        if context and context.get('defer_send_email'):
+            self.pool["account.invoice"].write(
+                cr, uid, [invoice_id], {'to_send': True},
+                context=context)
+        else:
+            self.pool["account.invoice"].send_email_contract_invoice(
+                cr, uid, invoice_id, context=context)
+
     def create_invoice(self, cr, uid, ids, source_process=None, context=None):
         context = context or {}
         prorata = (source_process == PROCESS_PRORATA)
@@ -569,12 +566,6 @@ class account_analytic_account(orm.Model):
 
         account_analytic_account_obj = self.pool['account.analytic.account']
         account_analytic_line_obj = self.pool['account.analytic.line']
-
-        res_company_obj = self.pool['res.company']
-        res_company_data = res_company_obj.read(
-            cr, uid,
-            res_company_obj._company_default_get(cr, uid, context),
-            context=context)
 
         res = []
         if context.get('create_invoice_mode', 'contract') != 'reseller':
@@ -604,10 +595,6 @@ class account_analytic_account(orm.Model):
                     else:
                         res.append(inv)
 
-                    if res_company_data['send_email_contract_invoice']:
-                        self.send_email_contract_invoice(
-                            cr, uid, inv, context=context)
-
         else:
             query = [('account_id', 'in', ids),
                      ('to_invoice', '!=', False),
@@ -633,14 +620,13 @@ class account_analytic_account(orm.Model):
                 else:
                     res.append(inv)
 
-                if res_company_data['send_email_contract_invoice']:
-                    self.send_email_contract_invoice(
-                        cr, uid, inv, context=context)
-
+        for inv in res:
+            self.trigger_email(cr, uid, inv, context=context)
         return res
 
     def create_lines_and_invoice(self, cr, uid, ids, source_process=None,
                                  context=None):
+
         self.create_analytic_lines(cr, uid, ids, context=context)
         res = self.create_invoice(cr, uid, ids, source_process,
                                   context=context)
