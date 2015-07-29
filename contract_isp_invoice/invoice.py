@@ -93,7 +93,8 @@ class Invoice(orm.Model):
 
         return True
 
-    def send_pending_invoices(self, cr, uid, ids, company_id=None, context=None):
+    def send_pending_invoices(self, cr, uid, ids, company_id=None,
+                              context=None):
         """
         Send invoices that have been marked `to_send`
         """
