@@ -639,6 +639,8 @@ class account_analytic_account(orm.Model):
                                                    context=c)
                 inv.write({'internal_number': new_name})
 
+        return True
+
     def open_invoices(self, cr, uid, ids, context=None):
         wf_service = netsvc.LocalService("workflow")
         for inv in ids:
