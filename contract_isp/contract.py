@@ -163,7 +163,7 @@ class contract_service(orm.Model):
         'activation_date': fields.datetime('Activation date'),
         'billed_to_date': fields.date('Billed until date'),
         'deactivation_date': fields.datetime('Deactivation date'),
-        'duration': fields.integer('Duration'),
+        'duration': fields.float('Duration'),
         'product_id': fields.many2one('product.product',
                                       'Product',
                                       required=True),
@@ -327,6 +327,31 @@ class contract_service(orm.Model):
             general_account_id = line.product_id.property_account_expense.id \
                 or line.product_id.categ_id.property_account_expense_categ.id
 
+            if line.analytic_line_type == LINE_TYPE_EXCEPTION:
+                if mode == 'prorata' and line.require_activation:
+                    activation_date = date
+                    start, end, ptx = self._get_prorata_interval_rate(
+                        cr, uid,
+                        activation_date,
+                        context=context,
+                    )
+                    duration = min(ptx, line.duration)
+                else:
+                    duration = min(1.0, line.duration)
+
+                amount = amount * duration
+                new_duration = line.duration - duration
+                line.write({'duration': new_duration})
+                if new_duration <= 0.0005:
+                    self.unlink(cr, SUPERUSER_ID, line.id)
+                    record['contract_service_id'] = False
+            elif line.analytic_line_type == LINE_TYPE_ONETIME:
+                if line.duration > 0:
+                    line.write({'duration': line.duration - 1})
+                else:
+                    # Do not create an already billed line
+                    continue
+
             record = {
                 'name': ' '.join([line.product_id.name,
                                   line.name or '',
@@ -344,19 +369,6 @@ class contract_service(orm.Model):
                     DEFAULT_SERVER_DATE_FORMAT),
                 'journal_id': 1
             }
-
-            if line.analytic_line_type == LINE_TYPE_EXCEPTION:
-                new_duration = line.duration - 1
-                line.write({'duration': new_duration})
-                if new_duration <= 0:
-                    self.unlink(cr, SUPERUSER_ID, line.id)
-                    record['contract_service_id'] = False
-            elif line.analytic_line_type == LINE_TYPE_ONETIME:
-                if line.duration > 0:
-                    line.write({'duration': line.duration - 1})
-                else:
-                    # Do not create an already billed line
-                    continue
 
             if 'default_type' in context:
                 context.pop('default_type')
