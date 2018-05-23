@@ -34,6 +34,7 @@ from openerp.addons.contract_isp.contract import add_months
 from openerp.tools import (
     DEFAULT_SERVER_DATE_FORMAT,
     DEFAULT_SERVER_DATETIME_FORMAT,
+    SUPERUSER_ID,
 )
 from openerp import netsvc
 import openerp.exceptions
@@ -124,8 +125,11 @@ class account_voucher(orm.Model):
             if context.get('active_model') == 'account.analytic.account' and \
                context.get('active_id', False):
                 date_today = fields.date.context_today(self, cr, uid)
+                """Use SUPERUSER_ID instead of uid to allow all users to create
+                   and validate initial invoice and bypass security rules on
+                   contract.service that restrict operations on TV services."""
                 for line in account_analytic_account_obj.browse(
-                        cr, uid, context.get('active_id'),
+                        cr, SUPERUSER_ID, context.get('active_id'),
                         context=context).contract_service_ids:
                     line.create_analytic_line(
                         mode='subscription',
