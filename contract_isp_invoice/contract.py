@@ -126,8 +126,8 @@ class account_voucher(orm.Model):
                context.get('active_id', False):
                 date_today = fields.date.context_today(self, cr, uid)
                 """Use SUPERUSER_ID instead of uid to allow all users to create
-                   and validate initial invoice and bypass security rules on
-                   contract.service that restrict operations on TV services."""
+                   and validate the initial invoice and bypass security rules on
+                   contract.service."""
                 for line in account_analytic_account_obj.browse(
                         cr, SUPERUSER_ID, context.get('active_id'),
                         context=context).contract_service_ids:
